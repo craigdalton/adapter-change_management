@@ -69,13 +69,12 @@ class ServiceNowConnector {
      * @description Build and return the proper URI by appending an optionally passed
      *   [URL query string]{@link https://en.wikipedia.org/wiki/Query_string}.
      *
-     * @param {string} serviceNowTable - The table target of the ServiceNow table API.
      * @param {string} [query] - Optional URL query string.
      *
      * @return {string} ServiceNow URL
      */
-    constructUri(serviceNowTable, query = null) {
-        let uri = `/api/now/table/${serviceNowTable}`;
+    constructUri(query = null) {
+        let uri = `/api/now/table/${this.options.serviceNowTable}`;
         if (query) {
             uri = uri + '?' + query;
         }
@@ -151,24 +150,20 @@ class ServiceNowConnector {
      *   Will be HTML text if hibernating instance.
      * @param {error} callback.error - The error property of callback.
      */
-    sendRequest(requestOptions, callback) {
-        // Initialize return arguments for callback
-        let uri;
-        if (requestOptions.query)
-            uri = this.constructUri(requestOptions.serviceNowTable, requestOptions.query);
-        else
-            uri = this.constructUri(requestOptions.serviceNowTable);
+    sendRequest(callOptions, callback) {
+        // Construct API call to send to ServiceNow.
 
-        // // Construct API call to send to ServiceNow.
-        // const requestOptions = {
-        //     method: callOptions.method,
-        //     auth: {
-        //         user: toptions.username,
-        //         pass: options.password,
-        //     },
-        //     baseUrl: options.url,
-        //     uri: uri,
-        // };
+
+
+        const requestOptions = {
+            method: callOptions.method,
+            auth: {
+                user: callOptions.username,
+                pass: callOptions.password,
+            },
+            baseUrl: callOptions.url,
+            uri: this.constructUri(callOptions.query)
+        };
 
         request(requestOptions, (error, response, body) => {
             this.processRequestResults(error, response, body, (processedResults, processedError) => callback(processedResults, processedError));
