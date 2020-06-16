@@ -152,9 +152,6 @@ class ServiceNowConnector {
      */
     sendRequest(callOptions, callback) {
         // Construct API call to send to ServiceNow.
-
-
-
         const requestOptions = {
             method: callOptions.method,
             auth: {
