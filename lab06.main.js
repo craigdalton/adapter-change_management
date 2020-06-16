@@ -182,22 +182,7 @@ class ServiceNowAdapter extends EventEmitter {
      *   handles the response.
      */
     getRecord(callback) {
-        const response = this.connector.get(callback)
-        if (response.body) {
-            const body = JSON.parse(response.body)
-            const tickets = body.result
-            return tickets.forEach((ticket) => {
-                return {
-                    change_ticket_number: ticket.number,
-                    active: ticket.active,
-                    priority: ticket.priority,
-                    description: ticket.description,
-                    work_start: ticket.work_start,
-                    work_end: ticket.work_end,
-                    change_ticket_key: ticket.sys_id
-                }
-            })
-        }
+        this.connector.get(callback)
     }
 
     /**
@@ -210,20 +195,7 @@ class ServiceNowAdapter extends EventEmitter {
      *   handles the response.
      */
     postRecord(callback) {
-        const response = this.connector.post(callback)
-        if (response.body) {
-            const body = JSON.parse(response.body)
-            const result = body.result
-            return {
-                change_ticket_number: result.number,
-                active: result.active,
-                priority: result.priority,
-                description: result.description,
-                work_start: result.work_start,
-                work_end: result.work_end,
-                change_ticket_key: result.sys_id
-            }
-        }
+        this.connector.post(callback)
     }
 }
 
