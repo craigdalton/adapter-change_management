@@ -182,7 +182,7 @@ class ServiceNowAdapter extends EventEmitter {
      *   handles the response.
      */
     getRecord(callback) {
-        this.get(callback)
+        this.connector.get(callback)
     }
 
     /**
@@ -195,7 +195,7 @@ class ServiceNowAdapter extends EventEmitter {
      *   handles the response.
      */
     postRecord(callback) {
-        this.post(callback)
+        this.connector.post(callback)
     }
 }
 
