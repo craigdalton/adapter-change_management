@@ -129,6 +129,7 @@ class ServiceNowAdapter extends EventEmitter {
                  * responseData parameter.
                  */
                 this.emitOnline()
+                log.debug(`ServiceNow adapter instance ${this.id} passed health check.`);
                 if (callback) {
                     callback(result)
                 }
@@ -199,7 +200,7 @@ class ServiceNowAdapter extends EventEmitter {
                         })
                     })
                 }
-                return tickets
+                return callback(tickets)
             }
         )
     }
@@ -227,7 +228,7 @@ class ServiceNowAdapter extends EventEmitter {
                         work_end: body.result.work_end,
                         change_ticket_key: body.result.sys_id
                     }
-                    return ticket
+                    return callback(ticket)
                 }
             }
         )
